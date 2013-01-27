@@ -1,0 +1,26 @@
+{
+    "name": "handy/handy",
+    "type": "library",
+    "description": "Handy Data/Model Management Utility for PHP",
+    "keywords": [
+        "model",
+        "php",
+        "mysql"
+    ],
+    "homepage": "http://github.com/andyfleming/handy",
+    "license": "Apache 2.0",
+    "authors": [
+        {
+            "name": "Andy Fleming",
+            "email": "andy@andyfleming.com",
+            "homepage": "http://andyfleming.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    }
+
+}
