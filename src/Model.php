@@ -3,9 +3,9 @@
 #	Handy\Model
 ###########################################################################################################
 
-namespace andyfleming\handy;
+//namespace andyfleming\handy;
 
-	class Model extends HandySharedMethods {
+	class Model {
 		
 	# ---------------------------------------------------------------------------------
 	#	Variable Declarations
@@ -34,6 +34,21 @@ namespace andyfleming\handy;
 			
 			
 		}
+		
+
+	# ---------------------------------------------------------------------------------
+	#	setDatabaseHandler()
+	# ---------------------------------------------------------------------------------
+	
+		public function setDatabaseHandler() {
+			
+			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');
+			
+			//echo '<pre class="prePrint">'.print_r($GLOBALS[$databaseHandlerVariableName],true).'</pre>';
+			$this->db =& $GLOBALS[$databaseHandlerVariableName];
+			
+		}
+
 	
 	# ---------------------------------------------------------------------------------
 	#	save()

@@ -3,7 +3,7 @@
 #	Handy
 ###########################################################################################################
 
-namespace andyfleming\handy;
+//namespace andyfleming\handy;
 
 	class Handy {
 		
