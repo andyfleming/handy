@@ -4,7 +4,7 @@
 #		should be done as a trait, but easier for compatibility this way
 ###########################################################################################################
 
-namespace handy\handy;
+namespace andyfleming\handy;
 
 	class HandySharedMethods {
 

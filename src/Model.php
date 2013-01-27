@@ -3,7 +3,7 @@
 #	Handy\Model
 ###########################################################################################################
 
-namespace handy\handy;
+namespace andyfleming\handy;
 
 	class Model extends HandySharedMethods {
 		
