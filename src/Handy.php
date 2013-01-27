@@ -18,7 +18,8 @@
 			$compatibilityMethodMap = array(
 				'get'		=> 'lookup',
 				'getByID'	=> 'lookupByID',
-				'getRandom' => 'lookupRandom'
+				'getRandom' => 'lookupRandom',
+				'getEach'	=> 'lookupEach'
 			);
 			
 			// If they are using a deprecated method, let them know

@@ -36,7 +36,7 @@ public class Person extends Handy\Handy\Model {
 # ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 	
 	// Get each person over 30
-	$people = ModelName::lookupEach("age > 30");
+	$people = Person::lookupEach("age > 30");
 	
 	// Handy returns an array of Person objects by ID (or empty array)
 	if (count($people) > 0) {
@@ -64,7 +64,7 @@ public class Person extends Handy\Handy\Model {
 ### Basic Item Class
 
 ```php
-public class Person extends Handy\Handy\Model {
+public class Person extends HandyModel {
 	
 	const TABLE_NAME = 'people';
 	
@@ -107,17 +107,17 @@ if (!$person) {
 ModelName::lookup( *WHERE clause* )
 
 ```php
-$person = ModelName::get("`first_name`='Bob'");
+$person = Person::get("`first_name`='Bob'");
 
 // Returns single Person object or false
 ```
 
 ### Multiple Item Lookup by WHERE
 
-ModelName::getEach( *WHERE clause* )
+ModelName::lookupEach( *WHERE clause* )
 
 ```php
-$people = ModelName::getEach("age > 30");
+$people = Person::lookupEach("age > 30");
 
 // Returns array of Person objects by ID or empty array
 
@@ -143,15 +143,19 @@ Array people
 
 ## Advanded Usage
 
-### __postCreate Magic Method()
+### __extensionConstruct()
+### __postCreate()
 
 
 ## Goals and the Future
 
-* Migrate from MySQLI to PDO
+* Possibly migrate from MySQLI to PDO
 * Consider expanding functionality to include other database types other than MySQL
 
 
 ## Changelog
 
+1.1.1 - Fixes and updated README
+1.1.0 - Simplification of calls. Static methods moved to main model class ```Handy::getByID('Person',12)``` is now ```Person::getByID(12)```
+1.0.1 - Fixes, etc
 1.0.0 - Initial Release
