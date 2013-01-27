@@ -174,17 +174,14 @@
 ###########################################################################################################
 
 	# ---------------------------------------------------------------------------------
-	#	ModelName::get()
+	#	ModelName::lookup()
 	#		returns a single "stuffed" model
-	#
-	#		Example Usage:
-	#		Handy::get('WebsiteAccount','where statement')
-	#
 	# ---------------------------------------------------------------------------------
 	
-		public static function get($whereQuery=false) {
+		public static function lookup($whereQuery=false) {
 			
-			$modelClassName = __CLASS__;
+			$modelClassName = get_called_class();
+			
 			
 			// Grab the database handler
 			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');
@@ -216,17 +213,13 @@
 		}
 	
 	# ---------------------------------------------------------------------------------
-	#	Handy::getByID()
+	#	ModelName::lookupByID()
 	#		returns a "stuffed" model by ID (an alias of sorts)
-	#
-	#		Example Usage:
-	#		Handy::getByID('WebsiteAccount',123123)
-	#
 	# ---------------------------------------------------------------------------------
 	
-		public static function getByID($id) {
+		public static function lookupByID($id) {
 			
-			$modelClassName = __CLASS__;
+			$modelClassName = get_called_class();
 		
 			$id = (int) $id;
 			return Handy::get($modelClassName,"`id` = '{$id}'");
@@ -235,17 +228,13 @@
 	
 		
 	# ---------------------------------------------------------------------------------
-	#	Handy::deleteByID()
+	#	ModelName::deleteByID()
 	#		deletes an item by ID
-	#
-	#		Example Usage:
-	#		Handy::deleteByID('WebsiteAccount',123123)
-	#
 	# ---------------------------------------------------------------------------------
 	
 		public static function deleteByID($id) {
 		
-			$modelClassName = __CLASS__;
+			$modelClassName = get_called_class();
 					
 			$id = (int) $id;
 			
@@ -263,20 +252,17 @@
 	
 		
 	# ---------------------------------------------------------------------------------
-	#	Handy::getEach()
+	#	ModelName::lookupEach()
 	#		returns multiple single "stuffed" model
-	#
-	#		Example Usage:
-	#		Handy::get('WebsiteAccount','where statement')
 	# ---------------------------------------------------------------------------------
 	
-		public static function getEach($whereQuery=false) {
+		public static function lookupEach($whereQuery=false) {
 			
 			// Grab the database handler
 			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');
 			$db =& $GLOBALS[$databaseHandlerVariableName];
 			
-			$modelClassName = __CLASS__;		
+			$modelClassName = get_called_class();		
 			
 				
 			// Create SQL statement
@@ -318,13 +304,13 @@
 		
 		
 	# ---------------------------------------------------------------------------------
-	#	Handy::count()
+	#	ModelName::count()
 	#		
 	# ---------------------------------------------------------------------------------
 	
 		public static function count($whereQuery=false) {
 			
-			$modelClassName = __CLASS__;
+			$modelClassName = get_called_class();
 			
 			// Grab the database handler
 			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');
@@ -355,17 +341,13 @@
 		}
 	
 	# ---------------------------------------------------------------------------------
-	#	Handy::create()
+	#	ModelName::create()
 	#		creates new item in database and returns a single "stuffed" model
-	#
-	#		Example Usage:
-	#		Handy::create('WebsiteAccount',array('field_name' => 'value'))
-	#
 	# ---------------------------------------------------------------------------------
 	
 		public static function create($propertiesArray) {
 			
-			$modelClassName = __CLASS__;
+			$modelClassName = get_called_class();
 			
 			// Grab the database handler
 			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');

@@ -1,7 +1,7 @@
 {
     "name": "andyfleming/handy",
     "type": "library",
-    "description": "Handy Data/Model Management Utility for PHP",
+    "description": "Handy Model class for amazing data magic.",
     "keywords": [
         "model",
         "php",

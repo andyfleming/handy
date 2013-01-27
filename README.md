@@ -36,7 +36,7 @@ public class Person extends Handy\Handy\Model {
 # ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 	
 	// Get each person over 30
-	$people = Handy::getEach('Person',"age > 30");
+	$people = ModelName::lookupEach("age > 30");
 	
 	// Handy returns an array of Person objects by ID (or empty array)
 	if (count($people) > 0) {
@@ -79,7 +79,7 @@ public class Person extends Handy\Handy\Model {
 ### Item Creation
 
 ```php
-Handy::create('Person',array(
+Person::create(array(
 	'first_name' => 'John',
 	'last_name' => 'Smith'
 );
@@ -87,10 +87,10 @@ Handy::create('Person',array(
 
 ### Item Lookup by ID
 
-Handy::getByID( *Model Name* , *ID* )
+ModelName::lookupByID( *ID* )
 
 ```php
-$person = Handy::getByID('Person',12);
+$person = Person::lookupByID(12);
 
 // Returns single Person object or false
 if (!$person) {
@@ -104,20 +104,20 @@ if (!$person) {
 
 ### Item Lookup by WHERE
 
-Handy::get( *Model Name* , *WHERE clause* )
+ModelName::lookup( *WHERE clause* )
 
 ```php
-$person = Handy::get('Person',"`first_name`='Bob'");
+$person = ModelName::get("`first_name`='Bob'");
 
 // Returns single Person object or false
 ```
 
 ### Multiple Item Lookup by WHERE
 
-Handy::getEach( *Model Name* , *WHERE clause* )
+ModelName::getEach( *WHERE clause* )
 
 ```php
-$people = Handy::getEach('Person',"age > 30");
+$people = ModelName::getEach("age > 30");
 
 // Returns array of Person objects by ID or empty array
 
