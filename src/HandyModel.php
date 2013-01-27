@@ -174,6 +174,18 @@
 ###########################################################################################################
 
 	# ---------------------------------------------------------------------------------
+	#	ModelName::returnDatabaseHandler()
+	#		returns database handler reference
+	# ---------------------------------------------------------------------------------
+
+		public static function &returnDatabaseHandler() {
+
+			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');
+			return $GLOBALS[$databaseHandlerVariableName];
+		
+		}
+
+	# ---------------------------------------------------------------------------------
 	#	ModelName::lookup()
 	#		returns a single "stuffed" model
 	# ---------------------------------------------------------------------------------
@@ -182,11 +194,8 @@
 			
 			$modelClassName = get_called_class();
 			
-			
 			// Grab the database handler
-			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');
-			$db =& $GLOBALS[$databaseHandlerVariableName];
-			
+			$db =& self::returnDatabaseHandler();
 			
 			// Create SQL statement
 			if ($whereQuery) {
@@ -254,8 +263,8 @@
 					
 			$id = (int) $id;
 			
-			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');
-			$db =& $GLOBALS[$databaseHandlerVariableName];
+			// Grab the database handler
+			$db =& self::returnDatabaseHandler();
 			
 			// Create SQL statement
 			$sql = "SELECT * FROM `".$modelClassName::TABLE_NAME."` WHERE `id`='{$id}' LIMIT 1";
@@ -275,8 +284,7 @@
 		public static function lookupEach($whereQuery=false) {
 			
 			// Grab the database handler
-			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');
-			$db =& $GLOBALS[$databaseHandlerVariableName];
+			$db =& self::returnDatabaseHandler();
 			
 			$modelClassName = get_called_class();		
 			
@@ -329,8 +337,7 @@
 			$modelClassName = get_called_class();
 			
 			// Grab the database handler
-			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');
-			$db =& $GLOBALS[$databaseHandlerVariableName];
+			$db =& self::returnDatabaseHandler();
 			
 			// Create SQL statement
 			$sql = "SELECT COUNT(`id`) as `count` FROM `".$modelClassName::TABLE_NAME."`";
@@ -366,8 +373,7 @@
 			$modelClassName = get_called_class();
 			
 			// Grab the database handler
-			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');
-			$db =& $GLOBALS[$databaseHandlerVariableName];
+			$db =& self::returnDatabaseHandler();
 			
 			
 			// Create SQL statement
