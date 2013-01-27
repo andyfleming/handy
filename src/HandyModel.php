@@ -222,7 +222,23 @@
 			$modelClassName = get_called_class();
 		
 			$id = (int) $id;
-			return Handy::get($modelClassName,"`id` = '{$id}'");
+			return $modelClassName::lookup("`id` = '{$id}'");
+		}
+	
+	# ---------------------------------------------------------------------------------
+	#	ModelName::lookupRandom()
+	#		returns a random "stuffed" model
+	# ---------------------------------------------------------------------------------
+		
+		
+		public static function lookupRandom($whereQuery=false) {
+			
+			$modelClassName = get_called_class();
+
+			if (!$whereQuery) $whereQuery = '1=1';
+
+			return $modelClassName::lookup("{$whereQuery} ORDER BY RAND()");
+	
 		}
 		
 	
