@@ -155,10 +155,12 @@ Array people
 
 ## Changelog
 
-1.1.1 - Fixes and updated README
+**1.1.2** — README udpates
 
-1.1.0 - Simplification of calls. Static methods moved to main model class ```Handy::getByID('Person',12)``` is now ```Person::getByID(12)```
+**1.1.1** — Fixes and updated README
 
-1.0.1 - Fixes, etc
+**1.1.0** — Simplification of calls. Static methods moved to main model class ```Handy::getByID('Person',12)``` is now ```Person::getByID(12)```
 
-1.0.0 - Initial Release
+**1.0.1** — Fixes, etc
+
+**1.0.0** — Initial Release
