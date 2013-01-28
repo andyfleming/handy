@@ -19,10 +19,7 @@
 	# ---------------------------------------------------------------------------------
 	
 		final public function __construct($dataObject) {
-			
-			// Set local database handler refernece
-			$this->setDatabaseHandler();
-			
+						
 			// Store the data from the database in its own variable
 			$this->data			= clone $dataObject;
 			$this->originalData = clone $dataObject;
@@ -33,20 +30,6 @@
 			
 		}
 		
-
-	# ---------------------------------------------------------------------------------
-	#	setDatabaseHandler()
-	# ---------------------------------------------------------------------------------
-	
-		public function setDatabaseHandler() {
-			
-			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');
-			
-			//echo '<pre class="prePrint">'.print_r($GLOBALS[$databaseHandlerVariableName],true).'</pre>';
-			$this->db =& $GLOBALS[$databaseHandlerVariableName];
-			
-		}
-
 	
 	# ---------------------------------------------------------------------------------
 	#	save()
@@ -84,7 +67,7 @@
 						
 						// add it to the query
 						$sql .= "`{$col}`='";
-						$sql .= $this->db->real_escape_string($value);
+						$sql .= Handy::$db->real_escape_string($value);
 						$sql .= "', ";
 					}
 				}
@@ -96,7 +79,7 @@
 				// Add the where clause for ID
 				$sql .= " WHERE `id`='{$this->data->id}' LIMIT 1";
 				
-				if ($this->db->query($sql)) { return true; }
+				if (Handy::$db->query($sql)) { return true; }
 				else { return false; }
 			
 			// If there aren't changes, return true	
@@ -120,7 +103,7 @@
 			$sql = "DELETE FROM `{$tableName}` WHERE id = '{$this->data->id}' LIMIT 1";
 			
 			// Return result
-			if ($this->db->query($sql)) { return true; }
+			if (Handy::$db->query($sql)) { return true; }
 			else { return false; }
 			
 		}
@@ -174,18 +157,6 @@
 ###########################################################################################################
 
 	# ---------------------------------------------------------------------------------
-	#	ModelName::returnDatabaseHandler()
-	#		returns database handler reference
-	# ---------------------------------------------------------------------------------
-
-		public static function &returnDatabaseHandler() {
-
-			$databaseHandlerVariableName = constant('HANDY_DATABASE_HANDLER_VARIABLE_NAME');
-			return $GLOBALS[$databaseHandlerVariableName];
-		
-		}
-
-	# ---------------------------------------------------------------------------------
 	#	ModelName::lookup()
 	#		returns a single "stuffed" model
 	# ---------------------------------------------------------------------------------
@@ -193,9 +164,6 @@
 		public static function lookup($whereQuery=false) {
 			
 			$modelClassName = get_called_class();
-			
-			// Grab the database handler
-			$db =& self::returnDatabaseHandler();
 			
 			// Create SQL statement
 			if ($whereQuery) {
@@ -205,7 +173,7 @@
 			}
 				
 			// Run the query
-			$results = $db->query($sql);
+			$results = Handy::$db->query($sql);
 			
 			// If there is an object found
 			if (isset($results->num_rows) && $results->num_rows > 0) {
@@ -264,13 +232,13 @@
 			$id = (int) $id;
 			
 			// Grab the database handler
-			$db =& self::returnDatabaseHandler();
+			//$db =& self::returnDatabaseHandler();
 			
 			// Create SQL statement
 			$sql = "SELECT * FROM `".$modelClassName::TABLE_NAME."` WHERE `id`='{$id}' LIMIT 1";
 				
 			// Run the query
-			return $db->query($sql);
+			return Handy::$db->query($sql);
 			
 		}
 		
@@ -282,9 +250,6 @@
 	# ---------------------------------------------------------------------------------
 	
 		public static function lookupEach($whereQuery=false) {
-			
-			// Grab the database handler
-			$db =& self::returnDatabaseHandler();
 			
 			$modelClassName = get_called_class();		
 			
@@ -305,7 +270,7 @@
 			}
 			
 			// Run the query
-			$results = $db->query($sql);
+			$results = Handy::$db->query($sql);
 			
 			// If there is an object found
 			if (isset($results->num_rows) && $results->num_rows > 0) {
@@ -335,10 +300,7 @@
 		public static function count($whereQuery=false) {
 			
 			$modelClassName = get_called_class();
-			
-			// Grab the database handler
-			$db =& self::returnDatabaseHandler();
-			
+						
 			// Create SQL statement
 			$sql = "SELECT COUNT(`id`) as `count` FROM `".$modelClassName::TABLE_NAME."`";
 			
@@ -346,7 +308,7 @@
 			if ($whereQuery) { $sql .= " WHERE {$whereQuery}"; }
 			
 			// Run the query
-			$results = $db->query($sql);
+			$results = Handy::$db->query($sql);
 			
 			if (isset($results->num_rows) && $results->num_rows > 0) {
 				
@@ -373,7 +335,7 @@
 			$modelClassName = get_called_class();
 			
 			// Grab the database handler
-			$db =& self::returnDatabaseHandler();
+			//$db =& self::returnDatabaseHandler();
 			
 			
 			// Create SQL statement
@@ -386,7 +348,7 @@
 					
 					// add it to the query
 					$sql .= "`{$col}`='";
-					$sql .= $db->real_escape_string($value);
+					$sql .= Handy::$db->real_escape_string($value);
 					$sql .= "', ";
 				}
 			}
@@ -396,9 +358,9 @@
 			//echo $sql;
 			
 			// Attempt to insert the item
-			if (!$db->query($sql)) { return false; } else { 
+			if (!Handy::$db->query($sql)) { return false; } else { 
 				
-				$newItem = Handy::getByID($modelClassName,$db->insert_id);
+				$newItem = Handy::getByID($modelClassName,Handy::$db->insert_id);
 				
 				if (method_exists($newItem,'__postCreate')) { $newItem->__postCreate(); }
 				
@@ -407,6 +369,14 @@
 			}
 				
 		}
+	
+	# ---------------------------------------------------------------------------------
+	#	ModelName::setDB() aliases
+	# ---------------------------------------------------------------------------------
+	
+		public static function setDB($db)	{ return Handy::setDB($db); }
+		public static function DB($db)		{ return Handy::setDB($db); }
+		public static function db($db)		{ return Handy::setDB($db); }
 		
 		
 	}

@@ -13,6 +13,10 @@
 
 	class Handy {
 		
+		public static $db;
+		
+		
+		
 		public static function __callStatic($methodName, $arguments) {
 			
 			$compatibilityMethodMap = array(
@@ -37,6 +41,14 @@
 			
 		}
 		
+		public static function setDB($db) {
+			Handy::$db = $db;
+			return true;
+		}
+		
+		public static function DB($db) { return Handy::setDB($db); }
+		public static function db($db) { return Handy::setDB($db); }
+	
 	}
 	
 ?>

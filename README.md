@@ -21,12 +21,12 @@ public class Person extends HandyModel {
 #	Setup
 # ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
-	// Setup database handler
+	// Setup database handle
 	$dbh = new mysqli( $host, $user, $pass, $database );
 
-	// Set above variable name for Handy
-	define('HANDY_DATABASE_HANDLER_VARIABLE_NAME', 'dbh');
-
+	// Pass Handy the database handle	
+	Handy::setDB($dbh);
+	
 	// Require class
 	require "person.class.php";
 
