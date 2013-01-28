@@ -360,7 +360,7 @@
 			// Attempt to insert the item
 			if (!Handy::$db->query($sql)) { return false; } else { 
 				
-				$newItem = Handy::getByID($modelClassName,Handy::$db->insert_id);
+				$newItem = self::lookupByID(Handy::$db->insert_id);
 				
 				if (method_exists($newItem,'__postCreate')) { $newItem->__postCreate(); }
 				
@@ -375,7 +375,6 @@
 	# ---------------------------------------------------------------------------------
 	
 		public static function setDB($db)	{ return Handy::setDB($db); }
-		public static function DB($db)		{ return Handy::setDB($db); }
 		public static function db($db)		{ return Handy::setDB($db); }
 		
 		

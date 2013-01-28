@@ -46,7 +46,6 @@
 			return true;
 		}
 		
-		public static function DB($db) { return Handy::setDB($db); }
 		public static function db($db) { return Handy::setDB($db); }
 	
 	}

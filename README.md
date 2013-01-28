@@ -155,6 +155,10 @@ Array people
 
 ## Changelog
 
+**1.1.4** — Fixes for new static methods access
+
+**1.1.3** — Changed database handle setup to ```Handy::setDB($databaseHandlerVariable);```
+
 **1.1.2** — README udpates
 
 **1.1.1** — Fixes and updated README
