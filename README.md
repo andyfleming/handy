@@ -48,6 +48,31 @@ public class Person extends HandyModel {
 	
 ```
 
+## Comparison to traditional syntax
+
+### Add new person and fetch them back as a Person (class) object
+
+**Traditional:**
+
+```php
+$db->query("INSERT INTO `people` SET `x`='y', `a`='b'");
+
+$newPersonID = $db->insert_id;
+$newPerson = $db->query("SELECT * FROM `people` WHERE `id` = '{$newPersonID}'");
+
+$newPerson = $newPerson->fetch_object('Person');
+```
+
+**With Handy:**
+
+```php
+$newPerson = Person::create(array(
+	'x' => 'y',
+	'a' => 'b'
+));
+```
+
+
 ## Documentation
 
 * [Basic Usage](#basic-usage)
