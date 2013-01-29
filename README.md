@@ -129,17 +129,17 @@ if (!$person) {
 
 ### Item Lookup by WHERE
 
-ModelName::lookup( *WHERE clause* )
+ModelName::lookup( *WHERE clause* (optional) )
 
 ```php
-$person = Person::get("`first_name`='Bob'");
+$person = Person::lookup("`first_name`='Bob'");
 
 // Returns single Person object or false
 ```
 
 ### Multiple Item Lookup by WHERE
 
-ModelName::lookupEach( *WHERE clause* )
+ModelName::lookupEach( *WHERE clause* (optional) )
 
 ```php
 $people = Person::lookupEach("age > 30");
@@ -164,6 +164,17 @@ Array people
 
 */
 
+### Item Lookup Random by WHERE
+
+ModelName::lookupRandom( *WHERE clause (optional)* )
+
+```php
+$person = Person::lookupRandom("`age` > 30");
+
+// Returns single (random) Person object or false
+```
+
+
 ```
 
 ## Advanded Usage
@@ -176,6 +187,9 @@ Array people
 
 * Possibly migrate from MySQLI to PDO
 * Consider expanding functionality to include other database types other than MySQL
+* Add option to select only certain fields or JOIN
+* Show recommended syntax for adding custom lookup methods or overriding
+* Support multiple data sources; ```Handy::setDB($db)``` would set the default source but any class could have ```Person::setDB($db)``` to override. The only other issue is if you want to have multiple data sources with the same model object...
 
 
 ## Changelog
