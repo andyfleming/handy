@@ -175,8 +175,6 @@ $person = Person::lookupRandom("`age` > 30");
 ```
 
 
-```
-
 ## Advanded Usage
 
 ### __extensionConstruct()
