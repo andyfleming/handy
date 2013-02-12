@@ -164,6 +164,8 @@ Array people
 
 */
 
+```
+
 ### Item Lookup Random by WHERE
 
 ModelName::lookupRandom( *WHERE clause (optional)* )
