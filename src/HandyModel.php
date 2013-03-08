@@ -11,6 +11,7 @@
 		
 		public	$data;			// where the data actually lives
 		private $originalData;	// a private copy of the data for comparison
+		//public static $localDB;
 		
 	# ---------------------------------------------------------------------------------
 	#	__construct()
@@ -67,7 +68,7 @@
 						
 						// add it to the query
 						$sql .= "`{$col}`='";
-						$sql .= Handy::$db->real_escape_string($value);
+						$sql .= self::dbInstance()->real_escape_string($value);
 						$sql .= "', ";
 					}
 				}
@@ -79,7 +80,7 @@
 				// Add the where clause for ID
 				$sql .= " WHERE `id`='{$this->data->id}' LIMIT 1";
 				
-				if (Handy::$db->query($sql)) { return true; }
+				if (self::dbInstance()->query($sql)) { return true; }
 				else { return false; }
 			
 			// If there aren't changes, return true	
@@ -103,7 +104,7 @@
 			$sql = "DELETE FROM `{$tableName}` WHERE id = '{$this->data->id}' LIMIT 1";
 			
 			// Return result
-			if (Handy::$db->query($sql)) { return true; }
+			if (self::dbInstance()->query($sql)) { return true; }
 			else { return false; }
 			
 		}
@@ -173,7 +174,7 @@
 			}
 				
 			// Run the query
-			$results = Handy::$db->query($sql);
+			$results = self::dbInstance()->query($sql);
 			
 			// If there is an object found
 			if (isset($results->num_rows) && $results->num_rows > 0) {
@@ -238,7 +239,7 @@
 			$sql = "SELECT * FROM `".$modelClassName::TABLE_NAME."` WHERE `id`='{$id}' LIMIT 1";
 				
 			// Run the query
-			return Handy::$db->query($sql);
+			return self::dbInstance()->query($sql);
 			
 		}
 		
@@ -270,7 +271,7 @@
 			}
 			
 			// Run the query
-			$results = Handy::$db->query($sql);
+			$results = self::dbInstance()->query($sql);
 			
 			// If there is an object found
 			if (isset($results->num_rows) && $results->num_rows > 0) {
@@ -308,7 +309,7 @@
 			if ($whereQuery) { $sql .= " WHERE {$whereQuery}"; }
 			
 			// Run the query
-			$results = Handy::$db->query($sql);
+			$results = self::dbInstance()->query($sql);
 			
 			if (isset($results->num_rows) && $results->num_rows > 0) {
 				
@@ -348,7 +349,7 @@
 					
 					// add it to the query
 					$sql .= "`{$col}`='";
-					$sql .= Handy::$db->real_escape_string($value);
+					$sql .= self::dbInstance()->real_escape_string($value);
 					$sql .= "', ";
 				}
 			}
@@ -358,9 +359,9 @@
 			//echo $sql;
 			
 			// Attempt to insert the item
-			if (!Handy::$db->query($sql)) { return false; } else { 
+			if (!self::dbInstance()->query($sql)) { return false; } else { 
 				
-				$newItem = self::lookupByID(Handy::$db->insert_id);
+				$newItem = self::lookupByID(self::dbInstance()->insert_id);
 				
 				if (method_exists($newItem,'__postCreate')) { $newItem->__postCreate(); }
 				
@@ -371,11 +372,21 @@
 		}
 	
 	# ---------------------------------------------------------------------------------
-	#	ModelName::setDB() aliases
+	#	dbInstance
+	#		returns the reference of the proper database (model-specific or default)
 	# ---------------------------------------------------------------------------------
 	
-		public static function setDB($db)	{ return Handy::setDB($db); }
-		public static function db($db)		{ return Handy::setDB($db); }
+		protected static function &dbInstance() {
+			
+			$className = get_called_class();
+			
+			if (isset(Handy::$db[$className])) {
+				return Handy::$db[$className];
+			} else {
+				return Handy::$defaultDB;
+			}
+	
+		}
 		
 		
 	}

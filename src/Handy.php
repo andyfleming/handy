@@ -14,6 +14,7 @@
 	class Handy {
 		
 		public static $db;
+		public static $defaultDB;
 		
 		
 		
@@ -42,11 +43,23 @@
 		}
 		
 		public static function setDB($db) {
-			Handy::$db = $db;
+		
+			Handy::$defaultDB = $db;
 			return true;
+		
 		}
 		
-		public static function db($db) { return Handy::setDB($db); }
+		public static function db($db) 				{ return Handy::setDB($db); }
+		public static function setDefaultDB($db)	{ return Handy::setDB($db); }
+	
+	
+	
+		public static function setModelDB($modelName,$db) {
+			
+			Handy::$db[$modelName] = $db;
+			return true;
+
+		}
 	
 	}
 	

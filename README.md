@@ -25,7 +25,7 @@ public class Person extends HandyModel {
 	$dbh = new mysqli( $host, $user, $pass, $database );
 
 	// Pass Handy the database handle	
-	Handy::setDB($dbh);
+	Handy::setDefaultDB($dbh);
 	
 	// Require class
 	require "person.class.php";
@@ -189,10 +189,11 @@ $person = Person::lookupRandom("`age` > 30");
 * Consider expanding functionality to include other database types other than MySQL
 * Add option to select only certain fields or JOIN
 * Show recommended syntax for adding custom lookup methods or overriding
-* Support multiple data sources; ```Handy::setDB($db)``` would set the default source but any class could have ```Person::setDB($db)``` to override. The only other issue is if you want to have multiple data sources with the same model object...
 
 
 ## Changelog
+
+**1.2.0** – Added support for multiple data sources. Limit 1 per model class. ```Handy::setDefaultDB($dbh)``` or ```Handy::setModelDB('ModelName',$dbh)```
 
 **1.1.4** — Fixes for new static methods access
 
