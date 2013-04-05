@@ -13,6 +13,9 @@
 		private $originalData;	// a private copy of the data for comparison
 		//public static $localDB;
 		
+		// Unique Integer ID Column name; defaults to "id"
+		protected $uidName = 'id';
+		
 	# ---------------------------------------------------------------------------------
 	#	__construct()
 	#		This class is inteded to be extended but not required
@@ -40,13 +43,16 @@
 	
 		final public function save() {
 			
+			// Localize unique id column name value
+			$uidName = $this->uidName;
+			
 			// Check that there is a table name set
 			$thisClassName = get_class($this);
 			$tableName = $thisClassName::TABLE_NAME;
 			if (empty($tableName)) { return false; }
 			
 			// Make sure there is an ID with which to save
-			if (empty($this->data->id)) { return false; }
+			if (empty($this->data->$uidName)) { return false; }
 			
 			// Calculate whether there have been changes made to the data
 			$diff = array_diff_assoc(
@@ -78,7 +84,7 @@
 				$sql = rtrim($sql,', ');
 				
 				// Add the where clause for ID
-				$sql .= " WHERE `id`='{$this->data->id}' LIMIT 1";
+				$sql .= " WHERE `id`='{$this->data->$uidName}' LIMIT 1";
 				
 				if (self::dbInstance()->query($sql)) { return true; }
 				else { return false; }
@@ -95,13 +101,16 @@
 	# ---------------------------------------------------------------------------------
 	
 		final public function delete() {
-		
+			
+			// Localize unique id column name value
+			$uidName = $this->uidName;
+			
 			$thisClassName = get_class($this);
 			$tableName = $thisClassName::TABLE_NAME;
 			if (empty($tableName)) { return false; }
 		
 			// Create the SQL
-			$sql = "DELETE FROM `{$tableName}` WHERE id = '{$this->data->id}' LIMIT 1";
+			$sql = "DELETE FROM `{$tableName}` WHERE id = '{$this->data->$uidName}' LIMIT 1";
 			
 			// Return result
 			if (self::dbInstance()->query($sql)) { return true; }
