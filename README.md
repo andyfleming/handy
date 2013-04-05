@@ -193,6 +193,8 @@ $person = Person::lookupRandom("`age` > 30");
 
 ## Changelog
 
+**1.2.1** – Added support for using alternate unique id name. Should be set in HandyModel class extension with ```protected $uidName = 'alt_uid'```, (defaults to ```id```).
+
 **1.2.0** – Added support for multiple data sources. Limit 1 per model class. ```Handy::setDefaultDB($dbh)``` or ```Handy::setModelDB('ModelName',$dbh)```
 
 **1.1.4** — Fixes for new static methods access
