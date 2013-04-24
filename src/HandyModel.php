@@ -151,6 +151,27 @@
 		}
 		
 	# ---------------------------------------------------------------------------------
+	#	setEscaped()
+	# ---------------------------------------------------------------------------------
+	
+		final public function setEscaped($propertyNameOrArray,$value='') {
+			
+			// If there is an array passed, set multiple
+			if (is_array($propertyNameOrArray)) {
+				
+				foreach	($propertyNameOrArray as $name => $value) {
+					$this->data->$name = self::dbInstance()->real_escape_string($value);
+					
+				}
+				
+			// Otherwise, set the single property
+			} else { $this->data->$propertyNameOrArray = self::dbInstance()->real_escape_string($value); }
+			
+			return true;
+			
+		}
+		
+	# ---------------------------------------------------------------------------------
 	#	notEmpty()
 	#		
 	# ---------------------------------------------------------------------------------
