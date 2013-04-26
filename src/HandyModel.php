@@ -189,7 +189,7 @@
 
 	# ---------------------------------------------------------------------------------
 	#	ModelName::lookup()
-	#		returns a single "stuffed" model
+	#		returns a single "hydrated" model
 	# ---------------------------------------------------------------------------------
 	
 		public static function lookup($whereQuery=false) {
@@ -222,7 +222,7 @@
 	
 	# ---------------------------------------------------------------------------------
 	#	ModelName::lookupByID()
-	#		returns a "stuffed" model by ID (an alias of sorts)
+	#		returns a "hydrated" model by ID (an alias of sorts)
 	# ---------------------------------------------------------------------------------
 	
 		public static function lookupByID($id) {
@@ -235,7 +235,7 @@
 	
 	# ---------------------------------------------------------------------------------
 	#	ModelName::lookupRandom()
-	#		returns a random "stuffed" model
+	#		returns a random "hydrated" model
 	# ---------------------------------------------------------------------------------
 		
 		
@@ -277,7 +277,7 @@
 		
 	# ---------------------------------------------------------------------------------
 	#	ModelName::lookupEach()
-	#		returns multiple single "stuffed" model
+	#		returns multiple single "hydrated" model
 	# ---------------------------------------------------------------------------------
 	
 		public static function lookupEach($whereQuery=false) {
@@ -358,7 +358,7 @@
 	
 	# ---------------------------------------------------------------------------------
 	#	ModelName::create()
-	#		creates new item in database and returns a single "stuffed" model
+	#		creates new item in database and returns a single "hydrated" model
 	# ---------------------------------------------------------------------------------
 	
 		public static function create($propertiesArray) {
