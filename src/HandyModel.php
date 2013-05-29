@@ -14,7 +14,7 @@
 		//public static $localDB;
 		
 		// Unique Integer ID Column name; defaults to "id"
-		protected $uidName = 'id';
+		static $uidName = 'id';
 		
 	# ---------------------------------------------------------------------------------
 	#	__construct()
@@ -44,7 +44,7 @@
 		final public function save() {
 			
 			// Localize unique id column name value
-			$uidName = $this->uidName;
+			$uidName = self::$uidName;
 			
 			// Check that there is a table name set
 			$thisClassName = get_class($this);
@@ -103,7 +103,7 @@
 		final public function delete() {
 			
 			// Localize unique id column name value
-			$uidName = $this->uidName;
+			$uidName = self::$uidName;
 			
 			$thisClassName = get_class($this);
 			$tableName = $thisClassName::TABLE_NAME;
@@ -228,9 +228,11 @@
 		public static function lookupByID($id) {
 			
 			$modelClassName = get_called_class();
-		
+			
+			$uidName = self::$uidName;
+			
 			$id = (int) $id;
-			return $modelClassName::lookup("`id` = '{$id}'");
+			return $modelClassName::lookup("`{$uidName}` = '{$id}'");
 		}
 	
 	# ---------------------------------------------------------------------------------
@@ -260,13 +262,15 @@
 		
 			$modelClassName = get_called_class();
 					
+			$uidName = self::$uidName;
+					
 			$id = (int) $id;
 			
 			// Grab the database handler
 			//$db =& self::returnDatabaseHandler();
 			
 			// Create SQL statement
-			$sql = "SELECT * FROM `".$modelClassName::TABLE_NAME."` WHERE `id`='{$id}' LIMIT 1";
+			$sql = "SELECT * FROM `".$modelClassName::TABLE_NAME."` WHERE `{$uidName}`='{$id}' LIMIT 1";
 				
 			// Run the query
 			return self::dbInstance()->query($sql);
@@ -310,9 +314,11 @@
 				
 				// fetch all
 				while ($item = $results->fetch_object()) {
-				
+					
+					$uidName = self::$uidName;
+								
 					// add to array and inject it in the provided model class
-					$itemsToReturn[$item->id] = new $modelClassName($item);
+					$itemsToReturn[$item->$uidName] = new $modelClassName($item);
 				}
 				
 				return $itemsToReturn;
@@ -333,7 +339,7 @@
 			$modelClassName = get_called_class();
 						
 			// Create SQL statement
-			$sql = "SELECT COUNT(`id`) as `count` FROM `".$modelClassName::TABLE_NAME."`";
+			$sql = "SELECT COUNT(*) as `count` FROM `".$modelClassName::TABLE_NAME."`";
 			
 			// If there is a where statement, include it
 			if ($whereQuery) { $sql .= " WHERE {$whereQuery}"; }
@@ -375,7 +381,7 @@
 			foreach ($propertiesArray as $col => $value) {
 			
 				// If it isn't the ID field
-				if ($col != 'id') {
+				if ($col != self::$uidName) {
 					
 					// add it to the query
 					$sql .= "`{$col}`='";
