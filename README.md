@@ -8,7 +8,7 @@ Handy is a utility for managing MySQL models, etc.
 
 ```php
 
-public class Person extends HandyModel {
+class Person extends HandyModel {
 	const TABLE_NAME = 'people';
 }
 ```
@@ -89,7 +89,7 @@ $newPerson = Person::create(array(
 ### Basic Item Class
 
 ```php
-public class Person extends HandyModel {
+class Person extends HandyModel {
 	
 	const TABLE_NAME = 'people';
 	
