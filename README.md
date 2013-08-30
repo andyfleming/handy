@@ -193,6 +193,8 @@ $person = Person::lookupRandom("`age` > 30");
 
 ## Changelog
 
+**1.2.4** – Fixes for custom UID name.
+
 **1.2.3** – Changed $uidName to static property and implemented more fully.
 
 **1.2.2** – Added `setEscaped` method
