@@ -42,9 +42,10 @@
 	# ---------------------------------------------------------------------------------
 	
 		final public function save() {
+		    $modelClassName = get_called_class();
 			
 			// Localize unique id column name value
-			$uidName = self::$uidName;
+			$uidName = $modelClassName::$uidName;
 			
 			// Check that there is a table name set
 			$thisClassName = get_class($this);
@@ -70,7 +71,7 @@
 				
 					// If it isn't the ID field
 					// (and it is different from what is originally loaded),
-					if ($col != 'id' && $value != $this->originalData->$col) {
+					if ($col != $uidName && $value != $this->originalData->$col) {
 						
 						// add it to the query
 						$sql .= "`{$col}`='";
@@ -84,7 +85,7 @@
 				$sql = rtrim($sql,', ');
 				
 				// Add the where clause for ID
-				$sql .= " WHERE `id`='{$this->data->$uidName}' LIMIT 1";
+				$sql .= " WHERE `{$uidName}`='{$this->data->$uidName}' LIMIT 1";
 				
 				if (self::dbInstance()->query($sql)) { return true; }
 				else { return false; }
@@ -101,16 +102,17 @@
 	# ---------------------------------------------------------------------------------
 	
 		final public function delete() {
+		    $modelClassName = get_called_class();
 			
 			// Localize unique id column name value
-			$uidName = self::$uidName;
+			$uidName = $modelClassName::$uidName;
 			
 			$thisClassName = get_class($this);
 			$tableName = $thisClassName::TABLE_NAME;
 			if (empty($tableName)) { return false; }
 		
 			// Create the SQL
-			$sql = "DELETE FROM `{$tableName}` WHERE id = '{$this->data->$uidName}' LIMIT 1";
+			$sql = "DELETE FROM `{$tableName}` WHERE `{$uidName}` = '{$this->data->$uidName}' LIMIT 1";
 			
 			// Return result
 			if (self::dbInstance()->query($sql)) { return true; }
@@ -229,7 +231,7 @@
 			
 			$modelClassName = get_called_class();
 			
-			$uidName = self::$uidName;
+			$uidName = $modelClassName::$uidName;
 			
 			$id = (int) $id;
 			return $modelClassName::lookup("`{$uidName}` = '{$id}'");
@@ -262,7 +264,7 @@
 		
 			$modelClassName = get_called_class();
 					
-			$uidName = self::$uidName;
+			$uidName = $modelClassName::$uidName;
 					
 			$id = (int) $id;
 			
@@ -314,9 +316,9 @@
 				
 				// fetch all
 				while ($item = $results->fetch_object()) {
-					
-					$uidName = self::$uidName;
-								
+
+					$uidName = $modelClassName::$uidName;
+						
 					// add to array and inject it in the provided model class
 					$itemsToReturn[$item->$uidName] = new $modelClassName($item);
 				}
@@ -381,7 +383,7 @@
 			foreach ($propertiesArray as $col => $value) {
 			
 				// If it isn't the ID field
-				if ($col != self::$uidName) {
+				if ($col != $modelClassName::$uidName) {
 					
 					// add it to the query
 					$sql .= "`{$col}`='";
