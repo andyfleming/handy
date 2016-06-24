@@ -397,7 +397,16 @@
 			//echo $sql;
 
 			// Attempt to insert the item
-			if (!self::dbInstance()->query($sql)) { return false; } else {
+			if (!self::dbInstance()->query($sql)) {
+
+				$message = self::dbInstance()->error;
+
+				if (!empty($message)) {
+					error_log('mysqli error: ' . $message);
+				}
+
+				return false;
+			} else {
 
 				$newItem = self::lookupByID(self::dbInstance()->insert_id);
 
