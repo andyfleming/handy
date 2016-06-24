@@ -403,6 +403,8 @@
 
 				if (!empty($message)) {
 					error_log('mysqli error: ' . $message);
+				} else {
+					error_log('Unknown Handy/mysqli error occurred');
 				}
 
 				return false;
