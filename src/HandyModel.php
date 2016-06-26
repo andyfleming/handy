@@ -378,7 +378,7 @@
 
 
 			// Create SQL statement
-			$sql = "INSERT INTO `".$modelClassName::TABLE_NAME."` SET ";
+			$sql = "INSERT IGNORE INTO `".$modelClassName::TABLE_NAME."` SET ";
 
 			foreach ($propertiesArray as $col => $value) {
 
